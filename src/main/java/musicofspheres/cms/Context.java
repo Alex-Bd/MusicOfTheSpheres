@@ -1,7 +1,6 @@
 package musicofspheres.cms;
 
 import lombok.Data;
-import org.neo4j.ogm.driver.Driver;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -17,26 +16,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-@Service
 @Data
-public class Context implements InitializingBean {
+public class Context {
 
     private String root;
     private int rootCount;
     private List<Path> music;
     private Path start;
-    @Autowired
+
     private SessionFactory sessionFactory;
     Session session;
 
-    @Override
+
     public void afterPropertiesSet() throws Exception {
-       session=sessionFactory.openSession();
+       //session=sessionFactory.openSession();
        root="c:\\Sync\\db\\public\\Music";
        start = Paths.get(root);
        music=fileWalker();
        rootCount = setRootCount();
-
     }
 
     private List<Path> fileWalker(){

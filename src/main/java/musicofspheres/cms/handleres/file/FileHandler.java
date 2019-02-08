@@ -1,24 +1,7 @@
 package musicofspheres.cms.handleres.file;
 
-import musicofspheres.cms.Context;
-import musicofspheres.cms.handleres.file.entity.Album;
-import musicofspheres.cms.handleres.file.entity.Artist;
-import musicofspheres.cms.handleres.file.entity.MusicListEntity;
-import musicofspheres.cms.handleres.file.entity.Song;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.nio.file.Path;
-import java.util.Iterator;
-
-
-@Service
-public class FileHandler implements InitializingBean {
-
-    @Autowired
-    Context ctx;
-
+public class FileHandler {
+/*
     MusicListEntity musicList;
     Artist artist = new Artist();
     Album album = new Album();
@@ -87,5 +70,5 @@ public class FileHandler implements InitializingBean {
             return  musicList;
 
     }
-
+*/
 }

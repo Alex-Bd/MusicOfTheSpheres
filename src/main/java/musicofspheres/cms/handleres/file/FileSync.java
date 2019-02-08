@@ -1,28 +1,12 @@
 package musicofspheres.cms.handleres.file;
 
-import musicofspheres.cms.handleres.file.entity.Album;
-import musicofspheres.cms.handleres.file.entity.Artist;
-import musicofspheres.cms.handleres.file.entity.Song;
-import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
-@Service
-public class FileSync implements InitializingBean {
+public class FileSync {
 
-    @Autowired
-    FileHandler files;
-
-    @Autowired
-    SessionFactory session;
-
-    @Override
     public void afterPropertiesSet() throws Exception {
        /* Map m = new HashMap();
         Session db=session.openSession();
@@ -49,8 +33,4 @@ public class FileSync implements InitializingBean {
 */
     }
 
-
-    String removeClutter(String str){
-        return "";
-    }
 }
