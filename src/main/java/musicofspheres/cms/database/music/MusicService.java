@@ -33,10 +33,6 @@ public class MusicService{
         return result;
     }
 
-    public ArtistResult getArtist(){
-        return art.getArtist("Alizee");
-    }
-
 
     public List<ArtistResult> getArtists(){
         return art.getArtists();

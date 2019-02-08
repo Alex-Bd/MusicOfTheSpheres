@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
 @Repository
 public interface ArtistResultRepo extends Neo4jRepository<ArtistResult, Long> {
 
