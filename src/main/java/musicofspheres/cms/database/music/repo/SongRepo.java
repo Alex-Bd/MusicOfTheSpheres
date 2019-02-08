@@ -7,10 +7,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
-
-@Async
 @Repository
 public interface SongRepo extends Neo4jRepository<Song, Long>{
 
