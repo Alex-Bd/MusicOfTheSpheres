@@ -1,4 +1,4 @@
-package musicofspheres.cms.controllers;
+package musicofspheres.cms.controllers.music;
 
 import musicofspheres.cms.database.music.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;

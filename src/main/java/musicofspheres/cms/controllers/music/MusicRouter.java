@@ -1,4 +1,4 @@
-package musicofspheres.cms.controllers;
+package musicofspheres.cms.controllers.music;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
