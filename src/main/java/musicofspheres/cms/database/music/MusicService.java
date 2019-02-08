@@ -1,5 +1,6 @@
 package musicofspheres.cms.database.music;
 
+import musicofspheres.cms.database.music.enity.Song;
 import musicofspheres.cms.database.music.repo.ArtistResultRepo;
 import musicofspheres.cms.database.music.repo.SongRepo;
 import musicofspheres.cms.database.music.results.ArtistResult;
@@ -38,7 +39,7 @@ public class MusicService{
         return art.getArtists();
     }
 
-    public SongResult getSong(String Artist, String Album, String Song){
+    public Song getSong(String Artist, String Album, String Song){
         return song.getSong(Artist,Album,Song);
     }
 

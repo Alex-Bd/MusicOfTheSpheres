@@ -11,14 +11,19 @@ import org.springframework.stereotype.Repository;
 public interface SongRepo extends Neo4jRepository<Song, Long>{
 
 
-    @Query("MATCH (ar:Artist {name:{artist}})-[alb:Album]->" +
-                 "(al:Album {name:{album}})-[son:Song]->" +
+    @Query("MATCH (ar:Artist {name:{artist}})-[alb:album]->" +
+                 "(al:Album {name:{album}})-[son:song]->" +
                  "(song:Song {name:{song}})" +
                  "RETURN song")
-    SongResult getSong(@Param("artist")String artist,
+    Song getSong(@Param("artist")String artist,
                        @Param("album") String album,
                        @Param("song") String song);
 
-
+    @Query("MATCH (ar:Artist {name:{artist}})-[alb:album]->" +
+                 "(al:Album {name:{album}}) "+
+                 "create (ar)-[:album]->(al)-[:song]->(:Song {name:{song}})")
+    void addSong(@Param("artist")String artist,
+                 @Param("album") String album,
+                 @Param("song") String song);
 
 }
