@@ -31,6 +31,17 @@ public class MusicRouter {
                 .accept(MediaType.APPLICATION_JSON)), musicHandler::getSong);
     }
 
+    @Bean
+    public RouterFunction<ServerResponse> addSongRoute(MusicHandler musicHandler) {
+
+        return RouterFunctions
+                .route()
+                .POST("/addSong",musicHandler::addSong).build();
+    }
+
+
+
+
 
 
 }

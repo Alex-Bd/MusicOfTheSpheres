@@ -36,6 +36,7 @@ public class MusicTests {
     @Before
     public void setUp() throws Exception {
         session = sessionFactory.openSession();
+        //System.out.println(sessionFactory.metaData().toString());
         session.purgeDatabase();
         session.query("create (r:Root)-[:music]->(m:Music)", new HashMap<String, Object>());
     }
@@ -55,7 +56,10 @@ public class MusicTests {
         assertEquals(artistRepo.getArtistOfAlbum("testAlbum").size(),2);
 
         songRepo.addSong("test","testAlbum","testSong");
+
         assertEquals(songRepo.getSong("test","testAlbum","testSong").getName(),"testSong");
+
+
 
     }
 

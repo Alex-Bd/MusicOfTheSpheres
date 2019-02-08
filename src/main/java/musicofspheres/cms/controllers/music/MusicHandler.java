@@ -33,7 +33,6 @@ public class MusicHandler{
     }
 
     public Mono<ServerResponse>  getSong(ServerRequest request){
-
         return ServerResponse
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -42,4 +41,13 @@ public class MusicHandler{
                         request.pathVariable("album"),
                         request.pathVariable("song"))));
     }
+
+    public Mono<ServerResponse>  addSong(ServerRequest request){
+        return ServerResponse
+                .ok().build(service.addSong(request.pathVariable("artist"),
+                        request.pathVariable("album"),
+                        request.pathVariable("song")));
+    }
+
+
 }
