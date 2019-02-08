@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class FileSync {
-
+/*
     public void afterPropertiesSet() throws Exception {
-       /* Map m = new HashMap();
+        Map m = new HashMap();
         Session db=session.openSession();
 
         String match="match (Music:Music) ";
@@ -30,7 +30,7 @@ public class FileSync {
             }
         }
 
-*/
-    }
 
+    }
+*/
 }

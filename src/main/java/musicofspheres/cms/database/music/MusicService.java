@@ -1,6 +1,6 @@
 package musicofspheres.cms.database.music;
 
-import musicofspheres.cms.database.music.repo.ArtistRepo;
+import musicofspheres.cms.database.music.repo.ArtistResultRepo;
 import musicofspheres.cms.database.music.repo.SongRepo;
 import musicofspheres.cms.database.music.results.ArtistResult;
 import musicofspheres.cms.database.music.results.SongResult;
@@ -13,11 +13,11 @@ import java.util.List;
 @Service
 public class MusicService{
 
-    ArtistRepo art;
+    ArtistResultRepo art;
     SongRepo song;
 
     @Autowired
-    public MusicService(ArtistRepo art, SongRepo song) {
+    public MusicService(ArtistResultRepo art, SongRepo song) {
         this.art = art;
         this.song = song;
     }

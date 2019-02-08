@@ -8,6 +8,6 @@ import org.springframework.data.neo4j.annotation.QueryResult;
 @QueryResult
 @Data
 public class AlbumResult {
-
     Album album;
+
 }
