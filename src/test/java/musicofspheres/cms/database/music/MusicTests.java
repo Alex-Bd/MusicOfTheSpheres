@@ -2,7 +2,6 @@ package musicofspheres.cms.database.music;
 
 import musicofspheres.cms.database.music.repo.AlbumRepo;
 import musicofspheres.cms.database.music.repo.ArtistRepo;
-import musicofspheres.cms.database.music.repo.ArtistResultRepo;
 import musicofspheres.cms.database.music.repo.SongRepo;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +36,7 @@ public class MusicTests {
     public void setUp() throws Exception {
         session = sessionFactory.openSession();
         //System.out.println(sessionFactory.metaData().toString());
-        session.purgeDatabase();
+        //session.purgeDatabase();
         session.query("create (r:Root)-[:music]->(m:Music)", new HashMap<String, Object>());
     }
 

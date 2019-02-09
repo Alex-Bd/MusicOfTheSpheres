@@ -16,7 +16,7 @@ public class MusicHandler{
     @Autowired
     MusicService service;
 
-    public Mono<ServerResponse> getArtists(ServerRequest request){
+    Mono<ServerResponse> getArtists(ServerRequest request){
         return ServerResponse
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -24,7 +24,7 @@ public class MusicHandler{
                 .fromObject(service.getArtists()));
     }
 
-    public Mono<ServerResponse> getAllMusic(ServerRequest request){
+    Mono<ServerResponse> getAllMusic(ServerRequest request){
         return ServerResponse
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -32,21 +32,23 @@ public class MusicHandler{
                 .fromObject(service.getAllMusic()));
     }
 
-    public Mono<ServerResponse>  getSong(ServerRequest request){
+    Mono<ServerResponse>  getSong(ServerRequest request){
         return ServerResponse
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters
-                .fromObject(service.getSong(request.pathVariable("artist"),
-                        request.pathVariable("album"),
-                        request.pathVariable("song"))));
+                .fromObject(service.getSong(request.queryParam("artist").get(),
+                                            request.queryParam("album").get(),
+                                            request.queryParam("song").get())));
     }
 
-    public Mono<ServerResponse>  addSong(ServerRequest request){
+    Mono<ServerResponse>  addSong(ServerRequest request){
+
         return ServerResponse
-                .ok().build(service.addSong(request.pathVariable("artist"),
-                        request.pathVariable("album"),
-                        request.pathVariable("song")));
+                .ok()
+                .build(service.addSong(request.queryParam("artist").get(),
+                                       request.queryParam("album").get(),
+                                       request.queryParam("song").get()));
     }
 
 
