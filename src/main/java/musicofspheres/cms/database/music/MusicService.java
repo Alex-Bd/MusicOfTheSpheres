@@ -10,17 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class MusicService {
 
-    ArtistResultRepo art;
-    ArtistRepo artistRepo;
-    AlbumRepo albumRepo;
-    SongRepo songRepo;
+    private ArtistResultRepo art;
+    private ArtistRepo artistRepo;
+    private AlbumRepo albumRepo;
+    private SongRepo songRepo;
 
+
+    @Autowired
     public MusicService(ArtistResultRepo art, ArtistRepo artistRepo, AlbumRepo albumRepo, SongRepo songRepo) {
         this.art = art;
         this.artistRepo = artistRepo;
@@ -28,16 +29,9 @@ public class MusicService {
         this.songRepo = songRepo;
     }
 
-    @Autowired
-
-
     public List<ArtistResult> getAllMusic() {
-        List<ArtistResult> result = new ArrayList<>();
-        try {
-            result = art.getAllMusic();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        List<ArtistResult> result;
+        result = art.getAllMusic();
         return result;
     }
 
@@ -50,7 +44,6 @@ public class MusicService {
     }
 
     public Mono<Void> addSong(String artist, String album, String song) {
-
         songRepo.addSong(artist, album, song);
         return Mono.create(voidMonoSink -> {});
     }

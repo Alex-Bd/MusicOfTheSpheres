@@ -9,12 +9,15 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
-
 @Component
 public class MusicHandler{
 
+    private MusicService service;
+
     @Autowired
-    MusicService service;
+    public MusicHandler(MusicService service) {
+        this.service = service;
+    }
 
     Mono<ServerResponse> getArtists(ServerRequest request){
         return ServerResponse

@@ -13,15 +13,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import java.util.HashMap;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 
 public class MusicTests {
-
-    private Session session;
 
     @Autowired
     SessionFactory sessionFactory;
@@ -33,11 +30,12 @@ public class MusicTests {
     SongRepo songRepo;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp(){
+        Session session;
         session = sessionFactory.openSession();
         //System.out.println(sessionFactory.metaData().toString());
         //session.purgeDatabase();
-        session.query("create (r:Root)-[:music]->(m:Music)", new HashMap<String, Object>());
+        session.query("create (r:Root)-[:music]->(m:Music)", new HashMap<>());
     }
 
     @Test
