@@ -18,8 +18,8 @@ public class MusicRouter {
                 .andRoute(RequestPredicates.GET("/music/getArtist/{artist}"), musicHandler::getArtist)
                 .andRoute(RequestPredicates.GET("/music/getAlbum/{artist}/{album}"), musicHandler::getAlbum)
                 .andRoute(RequestPredicates.GET("/music/getSong/{artist}/{album}/{song}"), musicHandler::getSong)
-                .andRoute(RequestPredicates.POST("/music/addSong/{artist}"), musicHandler::addArtist)
-                .andRoute(RequestPredicates.POST("/music/addSong/{artist}/{album}"), musicHandler::addAlbum)
+               // .andRoute(RequestPredicates.POST("/music/addSong/{artist}"), musicHandler::addArtist)
+               // .andRoute(RequestPredicates.POST("/music/addSong/{artist}/{album}"), musicHandler::addAlbum)
                 .andRoute(RequestPredicates.POST("/music/addSong/{artist}/{album}/{song}"), musicHandler::addSong);
     }
 
