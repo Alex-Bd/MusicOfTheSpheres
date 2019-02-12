@@ -12,8 +12,8 @@ import java.util.List;
 public interface ArtistRepo   extends Neo4jRepository<Artist, Long> {
 
 
-    @Query("match (r:Root)-[:music]->(m:Music) " +
-           "create (m)-[:artist]->(a:Artist {name:{artist}, image:{image}})")
+    @Query("match (r:Root)-[:Music]->(m:Music) " +
+           "create (m)-[:Artist]->(a:Artist {name:{artist}, image:{image}})")
     void createArtist(@Param("artist") String artist,
                       @Param("image") String image);
 

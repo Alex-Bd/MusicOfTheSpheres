@@ -38,7 +38,7 @@ public class MusicTests {
         session.query("create (r:Root)-[:music]->(m:Music)", new HashMap<>());
     }
 
-    @Test
+
     public void createArtistTest() {
         artistRepo.createArtist("test","image");
          artistRepo.createArtist("test1","image");
@@ -54,7 +54,7 @@ public class MusicTests {
 
         songRepo.addSong("test","testAlbum","testSong");
 
-        assertEquals(songRepo.getSong("test","testAlbum","testSong").getName(),"testSong");
+       assertEquals(songRepo.getSong("test","testAlbum","testSong").getName(),"testSong");
 
 
 

@@ -3,56 +3,74 @@ package musicofspheres.cms.controllers.music;
 import musicofspheres.cms.database.music.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.BodyExtractors;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+import java.io.File;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+
 @Component
-public class MusicHandler{
+public class MusicHandler {
 
     private MusicService service;
-
     @Autowired
     public MusicHandler(MusicService service) {
         this.service = service;
     }
 
-    Mono<ServerResponse> getArtists(ServerRequest request){
+    Mono<ServerResponse> getAllMusic(ServerRequest request) {
         return ServerResponse
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters
-                .fromObject(service.getArtists()));
+                      .fromObject(service.getAllMusic()));
     }
 
-    Mono<ServerResponse> getAllMusic(ServerRequest request){
+    Mono<ServerResponse> getArtist(ServerRequest request) {
         return ServerResponse
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters
-                .fromObject(service.getAllMusic()));
+                     .fromObject(service.getArtist(request.pathVariable("artist"))));
     }
 
-    Mono<ServerResponse>  getSong(ServerRequest request){
+    Mono<ServerResponse> getAlbum(ServerRequest request) {
         return ServerResponse
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters
-                .fromObject(service.getSong(request.queryParam("artist").get(),
-                                            request.queryParam("album").get(),
-                                            request.queryParam("song").get())));
+                     .fromObject(service.getAlbum(request.pathVariable("artist"),request.pathVariable("album"))));
     }
 
-    Mono<ServerResponse>  addSong(ServerRequest request){
-
+    Mono<ServerResponse> getSong(ServerRequest request) {
         return ServerResponse
                 .ok()
-                .build(service.addSong(request.queryParam("artist").get(),
-                                       request.queryParam("album").get(),
-                                       request.queryParam("song").get()));
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters
+                        .fromObject(service.getSong(request.pathVariable("artist"),
+                                request.pathVariable("album"),
+                                request.pathVariable("song"))));
     }
 
 
+    Mono<ServerResponse> addSong(ServerRequest request) {
+
+        return request.body(BodyExtractors.toMultipartData()).flatMap(p -> {
+            p.toSingleValueMap().keySet().stream().forEach(c -> {
+                FilePart fp = (FilePart) p.toSingleValueMap().get(c);
+                fp.transferTo(new File(("C:\\Sync\\db\\public\\Music\\"
+                        +request.pathVariable("artist")+"\\"
+                        +request.pathVariable("album")+"\\"
+                        +request.pathVariable("song"))
+                        .concat(fp.filename())));
+            });
+            return ServerResponse.ok().contentType(APPLICATION_JSON).header("Access-Control-Allow-Origin","*").body(Mono.just("SUCCESS"), String.class);
+        });
+    }
 }

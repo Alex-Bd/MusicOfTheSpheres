@@ -26,10 +26,4 @@ public interface ArtistResultRepo extends Neo4jRepository<ArtistResult, Long> {
             "                           songs:songs})} as artists")
     List<ArtistResult> getAllMusic();
 
-    @Query("match (artist:Artist)" +
-            "return artist")
-   List<ArtistResult> getArtists();
-
-
-
 }
