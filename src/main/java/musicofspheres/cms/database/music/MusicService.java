@@ -10,6 +10,7 @@ import musicofspheres.cms.database.music.repo.SongRepo;
 import musicofspheres.cms.database.music.results.ArtistResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class MusicService {
     private ArtistRepo artistRepo;
     private AlbumRepo albumRepo;
     private SongRepo songRepo;
-
+    private RestTemplate restTemplate  = new RestTemplate();
 
     @Autowired
     public MusicService(ArtistResultRepo art, ArtistRepo artistRepo, AlbumRepo albumRepo, SongRepo songRepo) {
@@ -49,8 +50,12 @@ public class MusicService {
     }
 
     public Mono<Void> addSong(String artist, String album, String song) {
+
         songRepo.addSong(artist, album, song);
-        return Mono.create(voidMonoSink -> {});
+
+        return Mono.create(ret -> {});
     }
+
+
 }
 
