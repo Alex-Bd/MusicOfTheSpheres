@@ -20,8 +20,9 @@ public interface SongRepo extends Neo4jRepository<Song, Long> {
 
     @Query("MATCH (ar:Artist {name:{artist}})-[alb:album]->" +
             "(al:Album {name:{album}}) " +
-            "MERGE (al)-[:song]->(:Song {name:{song}})")
-    void addSong(@Param("artist") String artist,
+            "MERGE (al)-[:song]->(s:Song {name:{song}})" +
+            "RETURN exists ( (al)-[]-(s))")
+    boolean addSong(@Param("artist") String artist,
                  @Param("album") String album,
                  @Param("song") String song);
 

@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 
 @Service
-public class FolderService {
+public class FolderService{
 
     @Value("${files.root}")
     String root;
@@ -18,13 +18,13 @@ public class FolderService {
     private File file;
 
     public Mono<Boolean> createArtistFolder(String artist){
-       dir = Paths.get(root+"/"+artist);
+       dir = Paths.get(root+"\\"+artist);
        file = new File(dir.toString());
        return Mono.just(file.mkdir());
     }
 
     public Mono<Boolean> deleteArtistFolder(String artist){
-           dir = Paths.get(root+"/"+artist);
+           dir = Paths.get(root+"\\"+artist);
            file = new File(dir.toString());
            return Mono.just(file.delete());
         }

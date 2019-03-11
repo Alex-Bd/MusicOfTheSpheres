@@ -11,8 +11,6 @@ import musicofspheres.cms.database.music.results.ArtistResult;
 import musicofspheres.cms.files.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
@@ -66,14 +64,30 @@ public class MusicService {
         return blockingWrapper;
     }
 
+    public Mono<Boolean> addAlbum(String artist,String album) {
 
-    public Mono<Void> addSong(String artist,String album,String song) {
         Mono blockingWrapper = Mono.fromCallable(() -> {
-              songRepo.addSong(artist, album, song);
-              return true;
+            if(albumRepo.addAlbum(artist,album))
+                return folderService.createAlbumFolder(artist,album);
+            else
+                return Mono.just(false);
         });
-        blockingWrapper = blockingWrapper.subscribeOn(Schedulers.elastic());
 
+        blockingWrapper = blockingWrapper.subscribeOn(Schedulers.elastic());
+        return blockingWrapper;
+    }
+
+
+    public Mono<Boolean> addSong(String artist,String album,String song) {
+
+        Mono blockingWrapper = Mono.fromCallable(() -> {
+            if(songRepo.addSong(artist,album,song))
+                return  Mono.just(true);
+            else
+                return Mono.just(false);
+        });
+
+        blockingWrapper = blockingWrapper.subscribeOn(Schedulers.elastic());
         return blockingWrapper;
     }
 

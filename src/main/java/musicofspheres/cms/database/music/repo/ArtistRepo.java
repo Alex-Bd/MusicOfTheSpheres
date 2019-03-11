@@ -13,14 +13,14 @@ public interface ArtistRepo extends Neo4jRepository<Artist, Long> {
 
 
     @Query("MATCH (r:Root)-[:module]->(m:Music) " +
-            "MERGE (m)-[:artist]->(a:Artist {name:{artist}, image:{image}})")
-    void createArtist(@Param("artist") String artist,
-                      @Param("image") String image);
+            "MERGE (m)-[:artist]->(a:Artist {name:{artist}, image:{image}})" +
+            "RETURN exists( (m)-[]-(a) )")
+    boolean createArtist(@Param("artist") String artist,
+                         @Param("image") String image);
 
-    @Query("MATCH (r:Root)-[:module]->(m:Music)-[:artist]-(ar:Artist) " +
-            "WHERE ar.name " +
-            "MERGE (m)-[:artist]->(a:Artist {name:{artist}}) " +
-            "RETURN exists((m)-[]-(a))")
+    @Query("MATCH (r:Root)-[:module]->(m:Music) " +
+            "MERGE (m)-[:artist]->(a:Artist {name:{artist}})" +
+            "RETURN exists( (m)-[]-(a) )")
     boolean createArtist(@Param("artist") String artist);
 
 

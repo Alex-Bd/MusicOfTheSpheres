@@ -17,8 +17,9 @@ public interface AlbumRepo extends Neo4jRepository<Album, Long> {
                    @Param("album") String album);
 
     @Query("MATCH (artist:Artist {name:{artist}}) " +
-            "MERGE (artist)-[:album]->(album:Album {name: {album}})")
-    void addAlbum(@Param("artist") String artist,
+           "MERGE (artist)-[:album]->(album:Album {name: {album}})" +
+            "RETURN exists( (artist)-[]-(album) )")
+    boolean addAlbum(@Param("artist") String artist,
                   @Param("album") String album);
 
 }
