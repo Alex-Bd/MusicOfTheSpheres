@@ -1,0 +1,31 @@
+package musicofspheres.cms.database.init;
+
+import musicofspheres.cms.database.NeoInit;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.assertEquals;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class InitTest {
+
+    @Autowired
+    NeoInit neo;
+
+    @Test
+    public void RootTest(){
+        assertEquals(0, neo.createRoot());
+    }
+    @Test
+    public void MusicModuleTest(){
+        assertEquals(true, neo.createMusicModule());
+    }
+
+
+
+
+}

@@ -8,10 +8,13 @@ import musicofspheres.cms.database.music.repo.ArtistRepo;
 import musicofspheres.cms.database.music.repo.ArtistResultRepo;
 import musicofspheres.cms.database.music.repo.SongRepo;
 import musicofspheres.cms.database.music.results.ArtistResult;
+import musicofspheres.cms.files.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.List;
 
@@ -22,14 +25,15 @@ public class MusicService {
     private ArtistRepo artistRepo;
     private AlbumRepo albumRepo;
     private SongRepo songRepo;
-    private RestTemplate restTemplate  = new RestTemplate();
+    private FolderService folderService;
 
     @Autowired
-    public MusicService(ArtistResultRepo art, ArtistRepo artistRepo, AlbumRepo albumRepo, SongRepo songRepo) {
+    public MusicService(ArtistResultRepo art, ArtistRepo artistRepo, AlbumRepo albumRepo, SongRepo songRepo, FolderService folderService) {
         this.art = art;
         this.artistRepo = artistRepo;
         this.albumRepo = albumRepo;
         this.songRepo = songRepo;
+        this.folderService = folderService;
     }
 
     public List<ArtistResult> getAllMusic() {
@@ -49,11 +53,28 @@ public class MusicService {
         return songRepo.getSong(Artist, Album, Song);
     }
 
-    public Mono<Void> addSong(String artist, String album, String song) {
+    public Mono<Boolean> addArtist(String artist) {
 
-        songRepo.addSong(artist, album, song);
+        Mono blockingWrapper = Mono.fromCallable(() -> {
+            if(artistRepo.createArtist(artist))
+               return folderService.createArtistFolder(artist);
+            else
+                return Mono.just(false);
+        });
 
-        return Mono.create(ret -> {});
+        blockingWrapper = blockingWrapper.subscribeOn(Schedulers.elastic());
+        return blockingWrapper;
+    }
+
+
+    public Mono<Void> addSong(String artist,String album,String song) {
+        Mono blockingWrapper = Mono.fromCallable(() -> {
+              songRepo.addSong(artist, album, song);
+              return true;
+        });
+        blockingWrapper = blockingWrapper.subscribeOn(Schedulers.elastic());
+
+        return blockingWrapper;
     }
 
 

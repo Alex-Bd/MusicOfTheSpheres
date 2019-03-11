@@ -3,12 +3,16 @@ package musicofspheres.cms.controllers.music;
 import musicofspheres.cms.database.music.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.reactive.function.BodyExtractors;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
+
+import java.io.File;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
@@ -56,14 +60,30 @@ public class MusicHandler {
                                 request.pathVariable("song"))));
     }
 
+    Mono<ServerResponse> addArtist(ServerRequest request) {
+        Mono<Boolean> status=service.addArtist(request.pathVariable("artist"));
+        return ServerResponse.ok().body(status, Boolean.class);
+    }
+
+   /* Mono<ServerResponse> addAlbum(ServerRequest request) {
+        return  Mono.<ServerResponse>create( s -> {
+            request.pathVariable("artist");
+
+        });
+    }*/
 
     Mono<ServerResponse> addSong(ServerRequest request) {
 
-       service.addSong(request.pathVariable("artist"),
-                       request.pathVariable("album"),
-                       request.pathVariable("song"));
+       return request.body(BodyExtractors.toMultipartData()).flatMap( p ->{
+           p.toSingleValueMap().keySet().stream().forEach(c ->{
+               FilePart fp = (FilePart) p.toSingleValueMap().get(c);
+               service.addSong(request.queryParam("artist").get(),request.queryParam("album").get(),fp.filename());
+               fp.transferTo( new File("d:\\".concat(fp.filename())));
+           });
+           return ServerResponse.ok().contentType(APPLICATION_JSON).header("Access-Control-Allow-Origin","*").body(Mono.just("SUCCESS"), String.class);
+       });
 
-            return ServerResponse.ok().contentType(APPLICATION_JSON).header("Access-Control-Allow-Origin","*").body(Mono.just("SUCCESS"), String.class);
+      // return ServerResponse.ok().contentType(APPLICATION_JSON).header("Access-Control-Allow-Origin","*").body(Mono.just("SUCCESS"), String.class);
 
     }
 }

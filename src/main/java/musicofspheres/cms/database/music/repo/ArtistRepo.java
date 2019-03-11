@@ -9,20 +9,27 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ArtistRepo   extends Neo4jRepository<Artist, Long> {
+public interface ArtistRepo extends Neo4jRepository<Artist, Long> {
 
 
-    @Query("match (r:Root)-[:Music]->(m:Music) " +
-           "create (m)-[:Artist]->(a:Artist {name:{artist}, image:{image}})")
+    @Query("MATCH (r:Root)-[:module]->(m:Music) " +
+            "MERGE (m)-[:artist]->(a:Artist {name:{artist}, image:{image}})")
     void createArtist(@Param("artist") String artist,
                       @Param("image") String image);
 
+    @Query("MATCH (r:Root)-[:module]->(m:Music)-[:artist]-(ar:Artist) " +
+            "WHERE ar.name " +
+            "MERGE (m)-[:artist]->(a:Artist {name:{artist}}) " +
+            "RETURN exists((m)-[]-(a))")
+    boolean createArtist(@Param("artist") String artist);
+
+
     @Query("MATCH (artist:Artist {name:{artist}}) " +
-            "return artist")
+            "RETURN artist")
     Artist getArtist(@Param("artist") String artist);
 
     @Query("MATCH (artist:Artist)-[]-(album:Album {name:{album}}) " +
-            "return artist")
+            "RETURN artist")
     List<Artist> getArtistOfAlbum(@Param("album") String album);
 
 }
