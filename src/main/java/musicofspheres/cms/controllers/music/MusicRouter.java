@@ -2,16 +2,9 @@ package musicofspheres.cms.controllers.music;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.codec.multipart.Part;
-import org.springframework.web.reactive.function.BodyExtractors;
-import org.springframework.web.reactive.function.server.RequestPredicates;
-import org.springframework.web.reactive.function.server.RouterFunction;
-import org.springframework.web.reactive.function.server.RouterFunctions;
-import org.springframework.web.reactive.function.server.ServerResponse;
-
-import java.io.File;
-import java.util.Map;
+import org.springframework.web.reactive.function.server.*;
 
 
 @Configuration
@@ -27,7 +20,6 @@ public class MusicRouter {
                 .andRoute(RequestPredicates.POST("/music/addAlbum/{artist}/{album}"), musicHandler::addAlbum)
                 .andRoute(RequestPredicates.POST("/music/addSong")
                         .and(RequestPredicates.contentType(MediaType.MULTIPART_FORM_DATA)),musicHandler::addSong);
-
 
     }
 
