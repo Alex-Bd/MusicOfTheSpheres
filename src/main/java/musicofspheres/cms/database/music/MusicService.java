@@ -8,7 +8,6 @@ import musicofspheres.cms.database.music.repo.ArtistRepo;
 import musicofspheres.cms.database.music.repo.ArtistResultRepo;
 import musicofspheres.cms.database.music.repo.SongRepo;
 import musicofspheres.cms.database.music.results.ArtistResult;
-import musicofspheres.cms.files.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -23,15 +22,13 @@ public class MusicService {
     private ArtistRepo artistRepo;
     private AlbumRepo albumRepo;
     private SongRepo songRepo;
-    private FolderService folderService;
 
     @Autowired
-    public MusicService(ArtistResultRepo art, ArtistRepo artistRepo, AlbumRepo albumRepo, SongRepo songRepo, FolderService folderService) {
+    public MusicService(ArtistResultRepo art, ArtistRepo artistRepo, AlbumRepo albumRepo, SongRepo songRepo) {
         this.art = art;
         this.artistRepo = artistRepo;
         this.albumRepo = albumRepo;
         this.songRepo = songRepo;
-        this.folderService = folderService;
     }
 
     public List<ArtistResult> getAllMusic() {
@@ -50,33 +47,6 @@ public class MusicService {
     public Song getSong(String Artist, String Album, String Song) {
         return songRepo.getSong(Artist, Album, Song);
     }
-
-    public Mono<Boolean> addArtist(String artist) {
-
-        Mono blockingWrapper = Mono.fromCallable(() -> {
-            if(artistRepo.createArtist(artist))
-               return folderService.createArtistFolder(artist);
-            else
-                return Mono.just(false);
-        });
-
-        blockingWrapper = blockingWrapper.subscribeOn(Schedulers.elastic());
-        return blockingWrapper;
-    }
-
-    public Mono<Boolean> addAlbum(String artist,String album) {
-
-        Mono blockingWrapper = Mono.fromCallable(() -> {
-            if(albumRepo.addAlbum(artist,album))
-                return folderService.createAlbumFolder(artist,album);
-            else
-                return Mono.just(false);
-        });
-
-        blockingWrapper = blockingWrapper.subscribeOn(Schedulers.elastic());
-        return blockingWrapper;
-    }
-
 
     public Mono<Boolean> addSong(String artist,String album,String song) {
 
