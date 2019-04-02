@@ -14,11 +14,11 @@ public class InitTest {
     @Autowired
     NeoInit neo;
 
-    @Test
+
     public void RootTest(){
         assertEquals(0, neo.createRoot());
     }
-    @Test
+
     public void MusicModuleTest(){
         assertEquals(true, neo.createMusicModule());
     }

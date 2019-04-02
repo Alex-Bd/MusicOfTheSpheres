@@ -23,7 +23,7 @@ public class MusicTests {
     @Autowired
     SongRepo songRepo;
 
-@Test
+
     public void createArtistTest() {
          artistRepo.createArtist("test","image");
          artistRepo.createArtist("test1","image");
