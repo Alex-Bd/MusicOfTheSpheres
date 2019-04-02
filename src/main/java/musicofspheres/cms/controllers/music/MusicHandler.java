@@ -65,16 +65,6 @@ public class MusicHandler {
                                 request.pathVariable("song"))));
     }
 
-    Mono<ServerResponse> addArtist(ServerRequest request) {
-        Mono<Boolean> status = service.addArtist(request.pathVariable("artist"));
-        return ServerResponse.ok().body(status, Boolean.class);
-    }
-
-    Mono<ServerResponse> addAlbum(ServerRequest request) {
-        Mono<Boolean> status = service.addAlbum(request.pathVariable("artist"), request.pathVariable("album"));
-        return ServerResponse.ok().body(status, Boolean.class);
-    }
-
     Mono<ServerResponse> addSong(ServerRequest request) {
         return request.body(BodyExtractors.toMultipartData()).flatMap(p -> {
             p.toSingleValueMap().keySet().forEach(c -> {
