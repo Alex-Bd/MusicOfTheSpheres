@@ -23,8 +23,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 public class MusicHandler {
 
     private MusicService service;
-    @Value("${files.root}")
-    String root;
 
     @Autowired
     public MusicHandler(MusicService service) {
@@ -65,34 +63,4 @@ public class MusicHandler {
                                 request.pathVariable("song"))));
     }
 
-    Mono<ServerResponse> addSong(ServerRequest request) {
-        return request.body(BodyExtractors.toMultipartData()).flatMap(p -> {
-            p.toSingleValueMap().keySet().forEach(c -> {
-                Part fp = p.toSingleValueMap().get(c);
-                try {
-                    BufferedOutputStream s = new BufferedOutputStream(
-                                             new FileOutputStream(
-                                         new File(root + "\\" + request.queryParam("artist").get())
-                                                + "\\" + request.queryParam("album").get()
-                                                + "\\" + fp.name() + ".mp3"));
-                    Mono<Void> w = DataBufferUtils.write(fp.content(), s).map(DataBufferUtils::release).then();
-                    w.subscribe();
-                    s.flush();
-                    s.close();
-                }catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                service.addSong(request.queryParam("artist").get()
-                        , request.queryParam("album").get()
-                        , fp.name()).subscribe();
-
-            });
-
-            return ServerResponse.ok()
-                    .contentType(APPLICATION_JSON)
-                    .header("Access-Control-Allow-Origin", "*")
-                    .body(Mono.just("SUCCESS"), String.class);
-        });
-    }
 }

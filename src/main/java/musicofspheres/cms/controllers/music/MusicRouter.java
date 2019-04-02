@@ -15,9 +15,7 @@ public class MusicRouter {
                 .route(RequestPredicates.GET("/music/getMusic"), musicHandler::getAllMusic)
                 .andRoute(RequestPredicates.GET("/music/getArtist/{artist}"), musicHandler::getArtist)
                 .andRoute(RequestPredicates.GET("/music/getAlbum/{artist}/{album}"), musicHandler::getAlbum)
-                .andRoute(RequestPredicates.GET("/music/getSong/{artist}/{album}/{song}"), musicHandler::getSong)
-                .andRoute(RequestPredicates.POST("/music/addSong")
-                        .and(RequestPredicates.contentType(MediaType.MULTIPART_FORM_DATA)),musicHandler::addSong);
+                .andRoute(RequestPredicates.GET("/music/getSong/{artist}/{album}/{song}"), musicHandler::getSong);
 
     }
 
