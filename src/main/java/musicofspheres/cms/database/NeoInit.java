@@ -21,7 +21,7 @@ public class NeoInit implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        createRoot();
-        createMusicModule();
+      //  createRoot();
+       // createMusicModule();
     }
 }

@@ -4,6 +4,8 @@
 /.mvn
 mvnw
 mvnw.cmd
+/src/main/resources/application.properties
+/src/main/resources/Astral-b6a3ed507d23.json
 
 ### STS ###
 .apt_generated
