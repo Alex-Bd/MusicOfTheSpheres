@@ -6,30 +6,30 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface ArtistRepo extends Neo4jRepository<Artist, Long> {
 
 
-    @Query("MATCH (r:Root)-[:module]->(m:Music) " +
-            "MERGE (m)-[:artist]->(a:Artist {name:{artist}, image:{image}})" +
-            "RETURN exists( (m)-[]-(a) )")
-    boolean createArtist(@Param("artist") String artist,
-                         @Param("image") String image);
-
-    @Query("MATCH (r:Root)-[:module]->(m:Music) " +
-            "MERGE (m)-[:artist]->(a:Artist {name:{artist}})" +
-            "RETURN exists( (m)-[]-(a) )")
-    boolean createArtist(@Param("artist") String artist);
+    @Query("MATCH (m:Music)-[:artist]->(artist:Artist) " +
+           "return case artist.name " +
+           "when {artist} "+
+           "then true " +
+           "else false end")
+    boolean checkArtist(@Param("artist") String artist);
 
 
-    @Query("MATCH (artist:Artist {name:{artist}}) " +
-            "RETURN artist")
+    @Query( "MATCH (r:Root)-[:module]->(m:Music) " +
+            "MERGE (m)-[:artist]->(artist:Artist {id:{id}, name:{name}})" +
+            "return case artist.name " +
+            "when {name} "+
+            "then true " +
+            "else false end")
+    boolean addArtist(@Param("id") String id,
+                      @Param("name") String name);
+
+    @Query("MATCH (m:Music)-[:artist]->(artist:Artist) " +
+           "where artist.name = {artist} " +
+           "return artist")
     Artist getArtist(@Param("artist") String artist);
-
-    @Query("MATCH (artist:Artist)-[]-(album:Album {name:{album}}) " +
-            "RETURN artist")
-    List<Artist> getArtistOfAlbum(@Param("album") String album);
 
 }

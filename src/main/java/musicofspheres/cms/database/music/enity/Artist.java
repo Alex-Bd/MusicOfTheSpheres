@@ -1,6 +1,7 @@
 package musicofspheres.cms.database.music.enity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -10,6 +11,7 @@ import java.util.List;
 
 
 @Data
+@NoArgsConstructor
 @NodeEntity
 public class Artist {
     @Id

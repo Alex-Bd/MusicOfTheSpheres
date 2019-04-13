@@ -19,4 +19,6 @@ public class Album {
     String name;
     @Relationship(type="song")
     List<Song> songs;
+    boolean exists;
+
 }

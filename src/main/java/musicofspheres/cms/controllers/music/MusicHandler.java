@@ -1,6 +1,7 @@
 package musicofspheres.cms.controllers.music;
 
 import musicofspheres.cms.database.music.MusicService;
+import musicofspheres.cms.database.music.enity.Artist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.buffer.DataBufferUtils;
@@ -29,7 +30,7 @@ public class MusicHandler {
         this.service = service;
     }
 
-    Mono<ServerResponse> getAllMusic(ServerRequest request) {
+    Mono<ServerResponse> getMusic(ServerRequest request) {
         return ServerResponse
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*")
@@ -41,8 +42,7 @@ public class MusicHandler {
         return ServerResponse
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*")
-                .body(BodyInserters
-                        .fromObject(service.getArtist(request.pathVariable("artist"))));
+                .body(BodyInserters.fromObject(service.getArtist(request.pathVariable("artist"))));
     }
 
     Mono<ServerResponse> getAlbum(ServerRequest request) {
@@ -52,8 +52,51 @@ public class MusicHandler {
                 .body(BodyInserters
                         .fromObject(service.getAlbum(request.pathVariable("artist"), request.pathVariable("album"))));
     }
-
     Mono<ServerResponse> getSong(ServerRequest request) {
+        return ServerResponse
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*")
+                .body(BodyInserters
+                        .fromObject(service.getSong(request.pathVariable("artist"), request.pathVariable("album"),request.pathVariable("song"))));
+    }
+
+
+    Mono<ServerResponse> checkArtist(ServerRequest request) {
+        return ServerResponse
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*")
+                .body(BodyInserters
+                        .fromObject(service.checkArtist(request.pathVariable("artist")) ));
+    }
+
+     Mono<ServerResponse> addArtist(ServerRequest request) {
+        return ServerResponse
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*")
+                .body(BodyInserters
+                        .fromObject(service.addArtist(request.pathVariable("id"),
+                                                      request.pathVariable("artist"))));
+    }
+
+     Mono<ServerResponse> checkAlbum(ServerRequest request) {
+        return ServerResponse
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*")
+                .body(BodyInserters.fromObject(service.checkAlbum(request.pathVariable("artist"),
+                                request.pathVariable("album"))));
+    }
+
+     Mono<ServerResponse> addAlbum(ServerRequest request) {
+        return ServerResponse
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*")
+                .body(BodyInserters
+                        .fromObject(service.addAlbum(request.pathVariable("artist"),
+                                request.pathVariable("id"),
+                                request.pathVariable("name"))));
+    }
+
+     Mono<ServerResponse> checkSong(ServerRequest request) {
         return ServerResponse
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*")
@@ -62,5 +105,17 @@ public class MusicHandler {
                                 request.pathVariable("album"),
                                 request.pathVariable("song"))));
     }
+
+     Mono<ServerResponse> addSong(ServerRequest request) {
+        return ServerResponse
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*")
+                .body(BodyInserters
+                        .fromObject(service.getSong(request.pathVariable("artist"),
+                                request.pathVariable("album"),
+                                request.pathVariable("song"))));
+    }
+
+
 
 }
