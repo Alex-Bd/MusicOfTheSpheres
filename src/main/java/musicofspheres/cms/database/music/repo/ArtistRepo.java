@@ -27,6 +27,8 @@ public interface ArtistRepo extends Neo4jRepository<Artist, Long> {
     boolean addArtist(@Param("id") String id,
                       @Param("name") String name);
 
+
+    /** May have to rewrite to use "case" */
     @Query("MATCH (m:Music)-[:artist]->(artist:Artist) " +
            "where artist.name = {artist} " +
            "return artist")

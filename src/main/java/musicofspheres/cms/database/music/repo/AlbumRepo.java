@@ -28,7 +28,7 @@ public interface AlbumRepo extends Neo4jRepository<Album, Long> {
                      @Param("id") String id,
                      @Param("name") String album);
 
-
+    /** May have to rewrite to use "case" */
     @Query("MATCH (artist:Artist {name:{artist}})-[al:album]-" +
             "(album:Album {name:{album}})" +
             "RETURN album")

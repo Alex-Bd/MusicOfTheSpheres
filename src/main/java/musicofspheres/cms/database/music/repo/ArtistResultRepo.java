@@ -19,9 +19,9 @@ public interface ArtistResultRepo extends Neo4jRepository<ArtistResult, Long> {
     ArtistResult getArtist(@Param("artist") String artist);
 
     @Query("MATCH (artist:Artist)-[al:album]-(album:Album)-[s:song]-(song:Song) " +
-            "  With artist, album, collect({name: song.name, id:id(song), path:song.path}) as songs " +
-            "   return {name: artist.name, id: id(artist), " +
-            "           albums:collect({id: id(album), " +
+            "  With artist, album, collect({name: song.name, id:song.id, path:song.path}) as songs " +
+            "   return {name: artist.name, id: artist.id, " +
+            "           albums:collect({id: album.id, " +
             "                           name:album.name, " +
             "                           songs:songs})} as artists")
     List<ArtistResult> getAllMusic();
