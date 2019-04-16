@@ -34,6 +34,7 @@ public class MusicHandler {
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*")
                 .body(BodyInserters.fromObject(service.getArtist(request.pathVariable("artist"))));
+
     }
 
     Mono<ServerResponse> getAlbum(ServerRequest request) {

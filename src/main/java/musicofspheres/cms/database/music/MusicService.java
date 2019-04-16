@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MusicService {
@@ -39,15 +40,15 @@ public class MusicService {
      * Return the artist node if exists
      * 500 error if not.. NTF
      */
-    public Artist getArtist(String artist) {
+    public Optional<Artist> getArtist(String artist) {
         return artistRepo.getArtist(artist);
     }
 
-    public Album getAlbum(String artist, String album) {
+    public Optional<Album> getAlbum(String artist, String album) {
         return albumRepo.getAlbum(artist, album);
     }
 
-    public Song getSong(String Artist, String Album, String Song) {
+    public Optional<Song> getSong(String Artist, String Album, String Song) {
         return songRepo.getSong(Artist, Album, Song);
     }
 
@@ -56,27 +57,28 @@ public class MusicService {
      * Checks if artist by name exists
      * Return true if it does, false otherwise
      */
-    public Boolean checkArtist(String artist) {
+    public Optional<Boolean> checkArtist(String artist) {
+        System.out.println(artistRepo.checkArtist(artist));
         return artistRepo.checkArtist(artist);
     }
 
-    public Boolean addArtist(String id, String name) {
+    public Optional<Boolean> addArtist(String id, String name) {
         return artistRepo.addArtist(id, name);
     }
 
-    public Boolean checkAlbum(String artist, String album) {
+    public Optional<Boolean> checkAlbum(String artist, String album) {
         return albumRepo.checkAlbum(artist, album);
     }
 
-    public Boolean addAlbum(String artist, String id, String name) {
+    public Optional<Boolean> addAlbum(String artist, String id, String name) {
         return albumRepo.addAlbum(artist, id, name);
     }
 
-    public Boolean checkSong(String artist, String album, String song) {
+    public Optional<Boolean> checkSong(String artist, String album, String song) {
         return songRepo.checkSong(artist, album, song);
     }
 
-    public Boolean addSong(String artist, String album, String id, String name) {
+    public Optional<Boolean> addSong(String artist, String album, String id, String name) {
         return songRepo.addSong(artist, album, id, name);
     }
 
