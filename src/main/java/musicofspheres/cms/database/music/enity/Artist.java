@@ -14,15 +14,16 @@ import java.util.List;
 @NoArgsConstructor
 @NodeEntity
 public class Artist {
+
     @Id
-    @GeneratedValue
-    Long id;
+    String id;
     String name;
     String image;
     @Relationship(type="album")
     List<Album> albums;
 
-    public Artist(String name, String image) {
+    public Artist(String id,String name, String image) {
+        this.id = id;
         this.name = name;
         this.image = image;
     }
