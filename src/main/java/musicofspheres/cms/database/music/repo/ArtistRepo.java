@@ -6,6 +6,7 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -24,11 +25,13 @@ public interface ArtistRepo extends Neo4jRepository<Artist, Long> {
     Optional<Boolean> addArtist(@Param("id") String id,
                       @Param("name") String name);
 
-
-    /** May have to rewrite to use "case" */
     @Query("MATCH (m:Music)-[:artist]->(artist:Artist) " +
            "WHERE artist.name = {artist} " +
            "RETURN artist")
     Optional<Artist> getArtist(@Param("artist") String artist);
+
+    @Query("MATCH (m:Music)-[:artist]->(artist:Artist) " +
+           "return artist")
+    List<Artist> getArtists();
 
 }

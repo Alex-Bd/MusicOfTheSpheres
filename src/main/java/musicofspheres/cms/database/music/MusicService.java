@@ -30,10 +30,8 @@ public class MusicService {
         this.songRepo = songRepo;
     }
 
-    public List<ArtistResult> getAllMusic() {
-        List<ArtistResult> result;
-        result = art.getAllMusic();
-        return result;
+    public List<Artist> getArtists() {
+        return artistRepo.getArtists();
     }
 
     public Optional<Artist> getArtist(String artist) {
