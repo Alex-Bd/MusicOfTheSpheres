@@ -36,10 +36,6 @@ public class MusicService {
         return result;
     }
 
-    /**
-     * Return the artist node if exists
-     * 500 error if not.. NTF
-     */
     public Optional<Artist> getArtist(String artist) {
         return artistRepo.getArtist(artist);
     }
@@ -57,29 +53,28 @@ public class MusicService {
      * Checks if artist by name exists
      * Return true if it does, false otherwise
      */
-    public Optional<Boolean> checkArtist(String artist) {
-        System.out.println(artistRepo.checkArtist(artist));
-        return artistRepo.checkArtist(artist);
+    public Boolean checkArtist(String artist) {
+        return artistRepo.checkArtist(artist).isPresent();
     }
 
-    public Optional<Boolean> addArtist(String id, String name) {
-        return artistRepo.addArtist(id, name);
+    public Boolean addArtist(String id, String name) {
+        return artistRepo.addArtist(id, name).isPresent();
     }
 
-    public Optional<Boolean> checkAlbum(String artist, String album) {
-        return albumRepo.checkAlbum(artist, album);
+    public Boolean checkAlbum(String artist, String album) {
+        return albumRepo.checkAlbum(artist, album).isPresent();
     }
 
-    public Optional<Boolean> addAlbum(String artist, String id, String name) {
-        return albumRepo.addAlbum(artist, id, name);
+    public Boolean addAlbum(String artist, String id, String name) {
+        return albumRepo.addAlbum(artist, id, name).isPresent();
     }
 
-    public Optional<Boolean> checkSong(String artist, String album, String song) {
-        return songRepo.checkSong(artist, album, song);
+    public Boolean checkSong(String artist, String album, String song) {
+        return songRepo.checkSong(artist, album, song).isPresent();
     }
 
-    public Optional<Boolean> addSong(String artist, String album, String id, String name) {
-        return songRepo.addSong(artist, album, id, name);
+    public Boolean addSong(String artist, String album, String id, String name) {
+        return songRepo.addSong(artist, album, id, name).isPresent();
     }
 
 
