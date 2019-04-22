@@ -18,7 +18,6 @@ public interface ArtistRepo extends Neo4jRepository<Artist, Long> {
            "RETURN exists((m)-[]->(artist)) ")
     Optional<Boolean> checkArtist(@Param("artist") String artist);
 
-
     @Query( "MATCH (r:Root)-[:module]->(m:Music) " +
             "MERGE (m)-[:artist]->(artist:Artist {id:{id}, name:{name}})" +
             "RETURN exists((m)-[]->(artist))")
@@ -29,6 +28,13 @@ public interface ArtistRepo extends Neo4jRepository<Artist, Long> {
            "WHERE artist.name = {artist} " +
            "RETURN artist")
     Optional<Artist> getArtist(@Param("artist") String artist);
+
+    @Query("MATCH (m:Music)-[:artist]->(artist:Artist) \n" +
+           "WHERE artist.id = {id} "+
+           "SET artist.name= {name}" +
+           "RETURN artist")
+    Optional<Artist> changeName(@Param("id") String artist,
+                             @Param("name") String newName);
 
     @Query("MATCH (m:Music)-[:artist]->(artist:Artist) " +
            "return artist")

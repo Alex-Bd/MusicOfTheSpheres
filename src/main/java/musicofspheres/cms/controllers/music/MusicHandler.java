@@ -71,13 +71,24 @@ public class MusicHandler {
                                 request.pathVariable("artist"))));
     }
 
+    Mono<ServerResponse> changeArtistName(ServerRequest request) {
+        return ServerResponse
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*")
+                .body(BodyInserters
+                        .fromObject(service.addArtist(request.pathVariable("id"),
+                                request.pathVariable("artist"))));
+    }
+
+
+
     Mono<ServerResponse> checkAlbum(ServerRequest request) {
         return ServerResponse
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*")
                 .body(BodyInserters
-                        .fromObject(service.checkAlbum(request.pathVariable("artist"),
-                                request.pathVariable("album"))));
+                        .fromObject(service.checkAlbum(request.pathVariable("id"),
+                                request.pathVariable("name"))));
     }
 
     Mono<ServerResponse> addAlbum(ServerRequest request) {

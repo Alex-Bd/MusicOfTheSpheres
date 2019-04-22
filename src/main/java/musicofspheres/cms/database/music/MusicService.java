@@ -59,6 +59,13 @@ public class MusicService {
         return artistRepo.addArtist(id, name).isPresent();
     }
 
+    public Artist changeArtistName(String id,String newName){
+        Optional<Artist> result = artistRepo.changeName(id,newName);
+        if(result.isPresent())
+            return result.get();
+        return new Artist();
+    }
+
     public Boolean checkAlbum(String artist, String album) {
         return albumRepo.checkAlbum(artist, album).isPresent();
     }
