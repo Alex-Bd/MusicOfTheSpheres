@@ -60,10 +60,7 @@ public class MusicService {
     }
 
     public Artist changeArtistName(String id,String newName){
-        Optional<Artist> result = artistRepo.changeName(id,newName);
-        if(result.isPresent())
-            return result.get();
-        return new Artist();
+        return artistRepo.changeName(id,newName).orElseGet(Artist::new);
     }
 
     public Boolean checkAlbum(String artist, String album) {

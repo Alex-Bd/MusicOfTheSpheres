@@ -33,7 +33,7 @@ public interface ArtistRepo extends Neo4jRepository<Artist, Long> {
            "WHERE artist.id = {id} "+
            "SET artist.name= {name}" +
            "RETURN artist")
-    Optional<Artist> changeName(@Param("id") String artist,
+    Optional<Artist> changeName(@Param("id") String id,
                              @Param("name") String newName);
 
     @Query("MATCH (m:Music)-[:artist]->(artist:Artist) " +

@@ -21,7 +21,7 @@ public class MusicRouter {
                 .andRoute(RequestPredicates.GET("/music/checkArtist/{artist}"), musicHandler::checkArtist)
                 .andRoute(RequestPredicates.POST("/music/addArtist/{id}/{artist}"),musicHandler::addArtist)
                 .andRoute(RequestPredicates.PATCH("/music/changeArtistName/{id}/{name}"),musicHandler::changeArtistName)
-                
+
                 .andRoute(RequestPredicates.GET("/music/checkAlbum/{artist}/{album}"), musicHandler::checkAlbum)
                 .andRoute(RequestPredicates.POST("/music/addAlbum/{artist}/{id}/{name}"),musicHandler::addAlbum)
 
